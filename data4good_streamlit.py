@@ -4,7 +4,7 @@
 # In[ ]:
 # Importation des librairies'
 import streamlit as st
-#import streamlit_book as stb
+import streamlit_book as stb
 from streamlit_option_menu import option_menu
 
 import pandas as pd
