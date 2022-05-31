@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 # Streamlit webpage properties / set up the app with wide view preset and a title
 st.set_page_config(page_title="HappyBirds", page_icon="🐦", layout="wide")
 
-api_k='your_own_TMDB_key'
+api_k='4f0d9b752dd1d3a0b158afb56be09ac7'
 
 #def form_callback():
     #st.write(st.session_state.titrefilm)
