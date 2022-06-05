@@ -28,8 +28,12 @@ import matplotlib.pyplot as plt
 # Streamlit webpage properties / set up the app with wide view preset and a title
 st.set_page_config(page_title="HappyBirds", page_icon="🐦", layout="wide")
 
+<<<<<<< HEAD
 api_k=st.secrets["api_secrets"]["tmdb_secret"]
 #api_k='4f0d9b752dd1d3a0b158afb56be09ac7'
+=======
+api_k='4f0d9b752dd1d3a0b158afb56be09ac7'
+>>>>>>> aab37b8f9cd74f02f42edd4c246052a9715bb739
 
 #def form_callback():
     #st.write(st.session_state.titrefilm)
