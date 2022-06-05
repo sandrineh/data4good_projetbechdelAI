@@ -6,6 +6,7 @@
 import streamlit as st
 import streamlit_book as stb
 from streamlit_option_menu import option_menu
+from google.cloud import firestore
 
 import pandas as pd
 import numpy as np
@@ -27,7 +28,8 @@ import matplotlib.pyplot as plt
 # Streamlit webpage properties / set up the app with wide view preset and a title
 st.set_page_config(page_title="HappyBirds", page_icon="🐦", layout="wide")
 
-api_k='your_own_TMDB_key'
+api_k=st.secrets["api_secrets"]["tmdb_secret"]
+#api_k='4f0d9b752dd1d3a0b158afb56be09ac7'
 
 #def form_callback():
     #st.write(st.session_state.titrefilm)
@@ -369,6 +371,10 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 				placeholder2.empty()
 				df = pd.DataFrame(st.session_state.data)
 				st.dataframe(df)
+				#if st.button("Store result in the database"):
+				db = firestore.Client.from_service_account_info(st.secrets["gcp_service_account"])
+				data_form = {u"table_results": st.session_state.data}
+				db.collection("formulaire").document(st.session_state.titrefilm).set(data_form)
 				break
 
 			else:
@@ -417,6 +423,7 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 						placeholder.empty()
 
 			st.dataframe(df)
+
 
 
 	# --------------------- Carte
@@ -618,7 +625,7 @@ def do_visualisation():
 			legend=dict(
 	    		orientation="h",
 	    		yanchor="bottom",
-	    		y=0.15,
+	    		y=0.05,
 	    		xanchor="right",
 	    		x=1),
 		    title=dict(text="Répartition par genre",y=0.9,),
@@ -635,6 +642,7 @@ def do_visualisation():
 			st.write("Equipe technique")
 			st.dataframe(gender_viz_crew)
 	placeholderviz.empty()
+
 # TEST
 #		# --------------------- Viz : casting 
 #
