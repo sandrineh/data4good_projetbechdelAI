@@ -536,14 +536,14 @@ def do_home_info():
 
 	with placeholderhome.container():
 
+		url_info_film= 'https://api.themoviedb.org/3/movie/'+str(id_m)+'?api_key='+api_k+'&language=fr-FR'
+		response_info_film = requests.get(url_info_film)
+		info_film_dict = response_info_film.json()
+		info_film=info_film_dict.get('overview')
+
 		colinfofilm.markdown("Infos film :", unsafe_allow_html=True)
-		colinfofilm.write(titre+""" : Duis nec neque arcu. Fusce malesuada eu nibh non euismod. 
-	In quis leo at dui pretium porta quis in ipsum. Aliquam erat volutpat. 
-	Integer vulputate nisi metus, ac porttitor ante mollis ut. 
-	Nam tempor suscipit quam et ullamcorper. Curabitur augue ligula, 
-	tincidunt id nisi suscipit, tincidunt consectetur quam. 
-	Aenean bibendum placerat sem, eu aliquet ante. Curabitur mi massa, tincidunt 
-	sed semper in, imperdiet nec nisi. """)
+		colinfofilm.write(info_film)
+
 	placeholderhome.empty()
 		
 # ---------- TEST BECHDEL
