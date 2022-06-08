@@ -54,8 +54,10 @@ with st.expander('vizViz'):
 
 with st.sidebar:
 	def header(content):
-		st.markdown(f'<p style="background-color:#7f3046;color:#FFF;height:150px;font-size:42px;display:flex;justify-content:center;align-items:center;margin-top:5px;margin-bottom:20px;text-align:center">{content}</p>', unsafe_allow_html=True)
+		st.markdown(f'<p style="background-color:#D0DE5C;color:#FFF;height:150px;font-size:42px;display:flex;justify-content:center;align-items:center;margin-top:5px;margin-bottom:20px;text-align:center;border-radius:6px;">{content}</p>', unsafe_allow_html=True)
+		st.image('BechdelAI.png')
 	header("Data 4 Good : Bechdel AI")
+	
 
 	# --------------- Add two expanders to provide additional information about this e-tutorial and the app
 with st.sidebar.expander("Le projet"):
@@ -83,9 +85,9 @@ with st.sidebar:
 	    orientation="vertical",
 	    styles={
 	        "container": {"padding": "0!important", "background-color": "#fafafa"},
-	        "icon": {"color": "orange", "font-size": "20px"}, 
+	        "icon": {"color": "#EEAE46", "font-size": "20px"}, 
 	        "nav-link": {"font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-	        "nav-link-selected": {"background-color": "green"},
+	        "nav-link-selected": {"background-color": "#D0DE5C"},
 	    }
 	)
 
@@ -112,9 +114,9 @@ class aaaa():
 		    orientation="horizontal",
 		    styles={
 		        "container": {"padding": "0!important", "background-color": "#fafafa"},
-		        "icon": {"color": "orange", "font-size": "20px"}, 
+		        "icon": {"color": "#EEAE46", "font-size": "20px"}, 
 		        "nav-link": {"font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-		        "nav-link-selected": {"background-color": "green"},
+		        "nav-link-selected": {"background-color": "#D0DE5C"},
 		    }
 		)
 		return selected_info
@@ -316,13 +318,10 @@ with st.expander(''):
 		# --------------- PRESENTATION DE LA PARTIE FORMULAIRE
 		st.header("INFOS FORMULAIRE")
 		st.write(""" En s'inspirant de l'étude Cinégalités du Collectif 50/50(1), l'objectif ici est d'étendre son périmètre (remonter dans le temps, plateformes indépendantes, séries) 
-			et automatiser la collecte de données pour les films d'initiative française(2). \n \n
+			et automatiser la collecte de données pour les films d'initiative française(2).""")
 
-(1) Rapport Cinégalité (https://collectif5050.com/wordpress/wp-content/uploads/2022/05/Cinegalite-s-Rapport.pdf) \n
-(2) film d'initiative française (FIF): "Un Film d’Initiative Française est un film agréé par le CNC dont le financement est
-majoritairement ou intégralement français. Ces Films d’Initiative Française peuvent être coproduits
-avec des coproducteurs étrangers mais, dans ce cas, la part étrangère sera minoritaire" (Source : https://www.afar-fiction.com/IMG/pdf/L_economie_des_films_francais.pdf) \n
-""")
+		st.markdown(f'<p style="font-size:10px;">(1) Rapport Cinégalité (<a style="font-size:10px;" href="https://collectif5050.com/wordpress/wp-content/uploads/2022/05/Cinegalite-s-Rapport.pdf">Télecharger le rapport complet</a>) <br> (2) film d\'initiative française (FIF): "Un Film d’Initiative Française est un film agréé par le CNC dont le financement est majoritairement ou intégralement français. Ces Films d’Initiative Française peuvent être coproduits avec des coproducteurs étrangers mais, dans ce cas, la part étrangère sera minoritaire" (Source : (<a style="font-size:10px;" href="https://www.afar-fiction.com/IMG/pdf/L_economie_des_films_francais.pdf">Afar Fiction</a>)</p>', unsafe_allow_html=True)
+		
 		with st.expander("Principe"):
 			st.write(""" Ce formulaire est la version numérique de la grille de visionnage 
 			de l'étude Cinégalité. L'objectif est ici de recueillir les données relatives aux personnages locuteurs récurrents. 
@@ -332,13 +331,13 @@ avec des coproducteurs étrangers mais, dans ce cas, la part étrangère sera mi
 -leur place dans la narration,\n
 -certains éléments relatifs à leurs actions ou à leur trajectoire dans le récit".""")
 
-		st.write("""Méthodologie : \n
-		1) Sélectionnez le film (FIF) de votre choix. S'il n'est pas dans la liste, renseignez le champs vide.
-		2) Renseignez les champs du formulaire. Vous pouvez vous aider du menu à gauche pour accédez à un thème du questionnaire.
-		A noter : l'idéal est de remplir tous les champs.\n
-		3) une fois que vous avez terminé,cliquer sur "Submit".2 options s'offrent alors à vous : 
-			- poursuivre et renseigner un nouveau film
-			_ terminer en cliquant sur "End" """)		
+		st.write("""Méthodologie :\n
+1) Sélectionnez le film (FIF) de votre choix. S'il n'est pas dans la liste, renseignez le champs vide.\n
+2) Renseignez les champs du formulaire. Vous pouvez vous aider du menu à gauche pour accédez à un thème du questionnaire.
+			>>A noter : l'idéal est de remplir tous les champs.\n
+3) une fois que vous avez terminé,cliquer sur "Submit". Deux options s'offrent alors à vous :\n
+	1) poursuivre et renseigner un nouveau film \n
+	2) terminer en cliquant sur "End" """)		
 
 	def main():
 		col_nav_form,colform = st.columns([2,5])
@@ -365,7 +364,7 @@ avec des coproducteurs étrangers mais, dans ce cas, la part étrangère sera mi
 				}
 
 				a:hover{
-				color: green;
+				color: #D0DE5C;
 				text-decoration: None;
 				}
 				</style>""", unsafe_allow_html=True)
@@ -761,7 +760,3 @@ if selected_info in menu_nav_viz_dict.keys():
 		do_bechdel()
 	else :
 		st.empty()
-
-
-
-
