@@ -6,7 +6,9 @@
 import streamlit as st
 import streamlit_book as stb
 from streamlit_option_menu import option_menu
+
 from google.cloud import firestore
+from google.cloud.firestore_v1.field_path import FieldPath
 
 import pandas as pd
 import numpy as np
@@ -26,13 +28,9 @@ from plotly.subplots import make_subplots
 import matplotlib.pyplot as plt
 
 # Streamlit webpage properties / set up the app with wide view preset and a title
-st.set_page_config(page_title="HappyBirds", page_icon="🐦", layout="wide")
+st.set_page_config(page_title="BechelAI", page_icon="🐦", layout="wide")
 
 api_k=st.secrets["api_secrets"]["tmdb_secret"]
-
-
-#def form_callback():
-    #st.write(st.session_state.titrefilm)
 
 with st.expander('vizViz'):
 	if 'cast' not in st.session_state:
@@ -47,6 +45,8 @@ with st.expander('vizViz'):
 		st.session_state.idfilm = ""
 	if 'poster' not in st.session_state:
 		st.session_state.poster = ""
+	if 'selectinfo' not in st.session_state:
+		st.session_state.selectinfo = ""
 
 # --------------- SIDEBAR - Projet
 
@@ -58,14 +58,14 @@ with st.sidebar:
 	header("Data 4 Good : Bechdel AI")
 
 	# --------------- Add two expanders to provide additional information about this e-tutorial and the app
-with st.sidebar.expander("About this project"):
+with st.sidebar.expander("Le projet"):
 	url="https://dataforgood.fr/projects/bechdelai"
 	st.image('https://dataforgood.fr/img/logo-dfg-new2.png', width=50) #use_column_width=True,
 	st.write("""Mesure et automatisation du test de Bechdel, de la (sous)représentation féminine 
 		et des inégalités de représentation dans le cinéma et l'audiovisuel """)
 	st.markdown(f'<a href={url} style="text-decoration:none;color:#000">En savoir plus</a>', unsafe_allow_html=True)
 
-with st.sidebar.expander("About the App"):
+with st.sidebar.expander("L'application"):
      st.write("""This interactive eCourse App was built by Sharone Li using Streamlit and Streamlit_book. 
      	Streamlit_book is a Streamlit companion library that was written in Python and created by Sebastian Flores Benner. 
      	\n  \nThe Streamlit_book library was released on 01/20/2022. 
@@ -101,24 +101,38 @@ titre_list = list(df_films['titre'].unique())
 id_list = list(df_films['id_moviedb_final'].unique())
 annee_list = list(df_films['annee_sortie'].unique())
 
-
-# --------------- FILM : PRESENTATION DE LA PARTIE INFOS FILMS ET DATAVIZ
-
-def do_home():
-	st.header("INFOS FILM ET DATAVISUALISATIONS")
-	st.write(""" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mi tellus, finibus quis lorem nec, 
-	pharetra commodo metus. Vivamus sollicitudin sapien eget leo pretium, et scelerisque leo blandit. 
-	In hendrerit sapien eget rutrum molestie. Aliquam eu consectetur enim. 
-	Morbi vestibulum justo non suscipit pretium. In in congue tortor, vel euismod nulla. Proin gravida, 
-	dui non accumsan mollis, dolor sapien efficitur felis, nec ornare elit mi at nisi. Etiam fringilla, 
-	nibh at imperdiet varius, mauris tellus gravida urna, sed placerat velit turpis sit amet neque. 
-	Donec sem metus, volutpat quis consectetur vel, porta ac est. Proin lectus tellus, aliquet et 
-	rhoncus sit amet, interdum ac magna.""")
-
+# --------------- MENU SELECTION / INFOS FILM ET DATAVIZ
+class aaaa():
+	def menu_horizontal():
+		selected_info = option_menu(None, 
+			["Informations", "Datavisualisations", "Test Bechdel"],
+		    icons=['camera-reels', 'pie-chart', "people",], 
+		    menu_icon="cast", 
+		    default_index=0, 
+		    orientation="horizontal",
+		    styles={
+		        "container": {"padding": "0!important", "background-color": "#fafafa"},
+		        "icon": {"color": "orange", "font-size": "20px"}, 
+		        "nav-link": {"font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+		        "nav-link-selected": {"background-color": "green"},
+		    }
+		)
+		return selected_info
+	# --------------- FILM : PRESENTATION DE LA PARTIE INFOS FILMS ET DATAVIZ
+	def do_home():
+		st.header("INFOS FILM ET DATAVISUALISATIONS")
+		st.write(""" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mi tellus, finibus quis lorem nec, 
+		pharetra commodo metus. Vivamus sollicitudin sapien eget leo pretium, et scelerisque leo blandit. 
+		In hendrerit sapien eget rutrum molestie. Aliquam eu consectetur enim. 
+		Morbi vestibulum justo non suscipit pretium. In in congue tortor, vel euismod nulla. Proin gravida, 
+		dui non accumsan mollis, dolor sapien efficitur felis, nec ornare elit mi at nisi. Etiam fringilla, 
+		nibh at imperdiet varius, mauris tellus gravida urna, sed placerat velit turpis sit amet neque. 
+		Donec sem metus, volutpat quis consectetur vel, porta ac est. Proin lectus tellus, aliquet et 
+		rhoncus sit amet, interdum ac magna.""")
 
 # --------------------- FORMULAIRE
 
-with st.expander('Grille de visionnage 2 : Formulaire'):
+with st.expander(''):
 	if 'num' not in st.session_state:
 	    st.session_state.num = 1
 	if 'data' not in st.session_state:
@@ -301,14 +315,30 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 	def intro_form():
 		# --------------- PRESENTATION DE LA PARTIE FORMULAIRE
 		st.header("INFOS FORMULAIRE")
-		st.write(""" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mi tellus, finibus quis lorem nec, 
-		pharetra commodo metus. Vivamus sollicitudin sapien eget leo pretium, et scelerisque leo blandit. 
-		In hendrerit sapien eget rutrum molestie. Aliquam eu consectetur enim. 
-		Morbi vestibulum justo non suscipit pretium. In in congue tortor, vel euismod nulla. Proin gravida, 
-		dui non accumsan mollis, dolor sapien efficitur felis, nec ornare elit mi at nisi. Etiam fringilla, 
-		nibh at imperdiet varius, mauris tellus gravida urna, sed placerat velit turpis sit amet neque. 
-		Donec sem metus, volutpat quis consectetur vel, porta ac est. Proin lectus tellus, aliquet et 
-		rhoncus sit amet, interdum ac magna.""")
+		st.write(""" En s'inspirant de l'étude Cinégalités du Collectif 50/50(1), l'objectif ici est d'étendre son périmètre (remonter dans le temps, plateformes indépendantes, séries) 
+			et automatiser la collecte de données pour les films d'initiative française(2). \n \n
+
+(1) Rapport Cinégalité (https://collectif5050.com/wordpress/wp-content/uploads/2022/05/Cinegalite-s-Rapport.pdf) \n
+(2) film d'initiative française (FIF): "Un Film d’Initiative Française est un film agréé par le CNC dont le financement est
+majoritairement ou intégralement français. Ces Films d’Initiative Française peuvent être coproduits
+avec des coproducteurs étrangers mais, dans ce cas, la part étrangère sera minoritaire" (Source : https://www.afar-fiction.com/IMG/pdf/L_economie_des_films_francais.pdf) \n
+""")
+		with st.expander("Principe"):
+			st.write(""" Ce formulaire est la version numérique de la grille de visionnage 
+			de l'étude Cinégalité. L'objectif est ici de recueillir les données relatives aux personnages locuteurs récurrents. 
+			On entend par là les personnages "apparaissant au moins dans deux séquences dans lesquelles ils s’expriment".
+			Les données sont de trois ordres : \n
+-les caractéristiques sociodémographiques des personnages, \n
+-leur place dans la narration,\n
+-certains éléments relatifs à leurs actions ou à leur trajectoire dans le récit".""")
+
+		st.write("""Méthodologie : \n
+		1) Sélectionnez le film (FIF) de votre choix. S'il n'est pas dans la liste, renseignez le champs vide.
+		2) Renseignez les champs du formulaire. Vous pouvez vous aider du menu à gauche pour accédez à un thème du questionnaire.
+		A noter : l'idéal est de remplir tous les champs.\n
+		3) une fois que vous avez terminé,cliquer sur "Submit".2 options s'offrent alors à vous : 
+			- poursuivre et renseigner un nouveau film
+			_ terminer en cliquant sur "End" """)		
 
 	def main():
 		col_nav_form,colform = st.columns([2,5])
@@ -340,6 +370,8 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 				}
 				</style>""", unsafe_allow_html=True)
 
+			titre = st.selectbox(label = 'Choisir un film', options = titre_list)
+			st.session_state.titrefilm = titre
 
 			st.markdown("""
 			<p style=>Vous pouvez cliquer sur une des rubrique ci-dessous pour accéder à la section à remplir :</p>
@@ -369,12 +401,31 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 
 			if placeholder2.button('end', key=num):
 				placeholder2.empty()
-				df = pd.DataFrame(st.session_state.data)
-				st.dataframe(df)
 				#if st.button("Store result in the database"):
 				db = firestore.Client.from_service_account_info(st.secrets["gcp_service_account"])
-				data_form = {u"table_results": st.session_state.data}
-				db.collection("formulaire").document(st.session_state.titrefilm).set(data_form)
+				#data_form = {u"table_results": st.session_state.data}
+				data_form = {}
+				#st.write(st.session_state.data) # => list
+				#st.write(type(data_form)) # => dict
+
+				for data in st.session_state.data :
+					id = data['titre_film']
+					index_submit = data['id_submit']
+					docs = db.collection(u'formulaire').get()
+					for doc in docs:
+						if id == doc.id and doc.exists:
+							db.collection('formulaire').document(id).collection('table_results').document(str(index_submit)).set(data)
+						else : 
+							db.collection('formulaire').document(id)
+							db.collection('formulaire').document(id).collection('table_results').document(str(index_submit)).set(data)
+				
+				# --------------- LORSQUE LA PARTIE FORMULAIRE A ETE SOUMISE
+				st.success('Le fomulaire a bien envoyé !')
+				placeholder.write(""" Merci pour votre contribution.""")
+
+				df = pd.DataFrame(st.session_state.data)
+				st.dataframe(df)
+
 				break
 
 			else:
@@ -386,8 +437,8 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 
 					if submitted:
 						st.session_state.data.append({
-		                    'id_submit': num,'titre_film' : {st.session_state.titrefilm} ,'id_tmdb':  {st.session_state.idfilm} ,
-		                    'annee_sortie':  {st.session_state.sortie} ,'nom_personnage': new_film.nom_personnage, 'role_principal': new_film.import_personnage, 
+		                    'id_submit': num,'titre_film' : st.session_state.titrefilm,'id_tmdb': st.session_state.idfilm,
+		                    'annee_sortie': st.session_state.sortie,'nom_personnage': new_film.nom_personnage, 'role_principal': new_film.import_personnage, 
 		                    'role_personnage':new_film.role_personnage,'genre_personnage':new_film.genre_personnage,'csp':new_film.catg_sociopro,
 		                    'metier':new_film.prec_metier,'origine':new_film.origine,'handicap':new_film.handicap,
 		                    'precision_handicap':new_film.prec_handi,'maladie':new_film.maladie,'addiction':new_film.addiction,
@@ -417,87 +468,72 @@ with st.expander('Grille de visionnage 2 : Formulaire'):
 						st.session_state.num += 1
 						placeholder.empty()
 						placeholder2.empty()
-						df = pd.DataFrame(st.session_state.data)
 					else:
 						st.stop()
 						placeholder.empty()
 
-			st.dataframe(df)
+# --------------------- DATASET
+def do_dataset():
+	placeholder_dataset = st.empty()
+	with placeholder_dataset.container():
+		st.empty()
 
-
-
-	# --------------------- Carte
-	#code_region = [11,24,27,28,32,44,52,53,75,76,84,93,94]
-	#liste_region = ["Ile-de-France",'Centre-Val de Loire','Bourgogne-Franche-Comté','Normandie','Hauts-de-France','Grand Est',
-	#	'Pays de la Loire','Bretagne','Nouvelle-Aquitaine','Occitanie','Auvergne-Rhône-Alpes',"Provence-Alpes-Côte d'Azur",'Corse']
-	#lat = [48.8499198,47.243599,47.280513,48.879870,50.629250,48.580002,47.7632836,48.202047,43.551921,43.892723,45.1695797,43.9351691,42.039604]
-	#lon = [2.6370411,0.689200,4.999437,0.171253,3.057256,7.750000,-0.3299687,-2.932644,-1.388997,3.282762,5.4502821,6.0679194,9.012893]
-	#dfm = pd.DataFrame(list(zip(code_region, liste_region,lat,lon)), columns = ['Code Officiel Région', 'Nom Officiel Région','lat', 'lon'])
-	#st.map(dfm)
-
-
+# --------------------- ACTION MENU SIDEBAR
 menu_dict = {
-    "Film" : {"fn": do_home},
+    "Film" : {"fn": aaaa},
+    "Datasets" : {"fn": do_dataset},
     "Formulaire" : {"fn": NewFilm},
 }
-
 
 if selected in menu_dict.keys():
 	if selected == "Formulaire":
 		intro_form()
 		main()
-	else:
-		menu_dict[selected]["fn"]()
-
-
-# --------------- MENU SELECTION / INFOS FILM ET DATAVIZ
-selected_info = option_menu(None, 
-	["Informations", "Datavisualisations", "Test Bechdel"],
-    icons=['camera-reels', 'pie-chart', "people",], 
-    menu_icon="cast", 
-    default_index=0, 
-    orientation="horizontal",
-    styles={
-        "container": {"padding": "0!important", "background-color": "#fafafa"},
-        "icon": {"color": "orange", "font-size": "20px"}, 
-        "nav-link": {"font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-        "nav-link-selected": {"background-color": "green"},
-    }
-)	
-
-# --------------- COLONNES SELECTION FILM
-colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
-
-with colselect :
-	#colselect.markdown("Sélectionnez un film", unsafe_allow_html=True)
-	titre = st.selectbox(label = 'Sélectionnez un film', options = titre_list)
-	st.session_state.titrefilm = titre
-
-	id_m = df_films['id_moviedb_final'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix id film", options = id_list)
-	st.session_state.idfilm = id_m
-
-	annee = df_films['annee_sortie'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix année", options = annee_list)
-	st.session_state.sortie = annee
-
-	st.caption('Année de sortie : '+annee)
-	st.caption('Id The movie DB : '+id_m)
-
-	url_poster='https://api.themoviedb.org/3/movie/'+str(id_m)+'/images?api_key='+api_k
-	response_poster = requests.get(url_poster)
-	film_poster_dict = response_poster.json()
-	film_poster=film_poster_dict.get('posters')
-	film_poster_df= pd.DataFrame(film_poster)
-	poster = film_poster_df['file_path'].loc[(film_poster_df['iso_639_1']=='fr')].values[0]
-
-	# widget to display the poster
-	st.session_state.poster = st.image('https://www.themoviedb.org/t/p/original/'+poster,use_column_width=True) #width=350)
-
-colvide1.write('')
+		selected_info= ""
+	elif selected == "Film":
+		aaaa.do_home()
+		selected_info= aaaa.menu_horizontal()
+	elif selected == "Datasets":
+		do_dataset()
+		selected_info= ""
+		
 
 # ---------- INFOS FILM
 
 def do_home_info():
+	colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
 	placeholderhome = st.empty()
+	titre=st.session_state.titrefilm
+
+	# --------------- COLONNES SELECTION FILM
+
+	#colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
+
+	with colselect :
+		#colselect.markdown("Sélectionnez un film", unsafe_allow_html=True)
+		titre = st.selectbox(label = 'Sélectionnez un film', options = titre_list)
+		st.session_state.titrefilm = titre
+
+		id_m = df_films['id_moviedb_final'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix id film", options = id_list)
+		st.session_state.idfilm = id_m
+
+		annee = df_films['annee_sortie'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix année", options = annee_list)
+		st.session_state.sortie = annee
+
+		st.caption('Année de sortie : '+annee)
+		st.caption('Id The movie DB : '+id_m)
+
+		url_poster='https://api.themoviedb.org/3/movie/'+str(id_m)+'/images?api_key='+api_k
+		response_poster = requests.get(url_poster)
+		film_poster_dict = response_poster.json()
+		film_poster=film_poster_dict.get('posters')
+		film_poster_df= pd.DataFrame(film_poster)
+		poster = film_poster_df['file_path'].loc[(film_poster_df['iso_639_1']=='fr')].values[0]
+
+		# widget to display the poster
+		st.session_state.poster = st.image('https://www.themoviedb.org/t/p/original/'+poster,use_column_width=True) #width=350)
+
+	colvide1.write('')
 
 	with placeholderhome.container():
 
@@ -514,6 +550,7 @@ def do_home_info():
 # ---------- TEST BECHDEL
 
 def do_bechdel():
+	colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
 
 	st.session_state.titrefilm = st.session_state.titrefilm
 	st.session_state.idfilm = st.session_state.idfilm
@@ -521,7 +558,36 @@ def do_bechdel():
 
 	placeholderbt = st.empty()
 
-	#colsf, colvide2,colbechdel = st.columns([2.5,0.5,5])
+	# --------------- COLONNES SELECTION FILM
+
+	#colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
+
+	with colselect :
+		#colselect.markdown("Sélectionnez un film", unsafe_allow_html=True)
+		titre = st.selectbox(label = 'Sélectionnez un film', options = titre_list)
+		st.session_state.titrefilm = titre
+
+		id_m = df_films['id_moviedb_final'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix id film", options = id_list)
+		st.session_state.idfilm = id_m
+
+		annee = df_films['annee_sortie'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix année", options = annee_list)
+		st.session_state.sortie = annee
+
+		st.caption('Année de sortie : '+annee)
+		st.caption('Id The movie DB : '+id_m)
+
+		url_poster='https://api.themoviedb.org/3/movie/'+str(id_m)+'/images?api_key='+api_k
+		response_poster = requests.get(url_poster)
+		film_poster_dict = response_poster.json()
+		film_poster=film_poster_dict.get('posters')
+		film_poster_df= pd.DataFrame(film_poster)
+		poster = film_poster_df['file_path'].loc[(film_poster_df['iso_639_1']=='fr')].values[0]
+
+		# widget to display the poster
+		st.session_state.poster = st.image('https://www.themoviedb.org/t/p/original/'+poster,use_column_width=True) #width=350)
+
+	colvide1.write('')
+
 	with placeholderbt.container():
 		colinfofilm.write("Resultat Test Bechdel")#, unsafe_allow_html=True)
 
@@ -556,8 +622,40 @@ def do_bechdel():
 # ---------- DATAVISUALISATION
 
 def do_visualisation():
+	colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
 
 	placeholderviz = st.empty()
+
+	# --------------- COLONNES SELECTION FILM
+
+	#colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
+
+	with colselect :
+		#colselect.markdown("Sélectionnez un film", unsafe_allow_html=True)
+		titre = st.selectbox(label = 'Sélectionnez un film', options = titre_list)
+		st.session_state.titrefilm = titre
+
+		id_m = df_films['id_moviedb_final'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix id film", options = id_list)
+		st.session_state.idfilm = id_m
+
+		annee = df_films['annee_sortie'].loc[df_films['titre']==titre].values[0] #st.selectbox(label = "Choix année", options = annee_list)
+		st.session_state.sortie = annee
+
+		st.caption('Année de sortie : '+annee)
+		st.caption('Id The movie DB : '+id_m)
+
+		url_poster='https://api.themoviedb.org/3/movie/'+str(id_m)+'/images?api_key='+api_k
+		response_poster = requests.get(url_poster)
+		film_poster_dict = response_poster.json()
+		film_poster=film_poster_dict.get('posters')
+		film_poster_df= pd.DataFrame(film_poster)
+		poster = film_poster_df['file_path'].loc[(film_poster_df['iso_639_1']=='fr')].values[0]
+
+		# widget to display the poster
+		st.session_state.poster = st.image('https://www.themoviedb.org/t/p/original/'+poster,use_column_width=True) #width=350)
+
+	colvide1.write('')
+
 	with placeholderviz.container():
 
 		#colinfofilm.subheader('Répartition par genre')
@@ -641,143 +739,29 @@ def do_visualisation():
 			st.dataframe(gender_viz_cast)
 			st.write("Equipe technique")
 			st.dataframe(gender_viz_crew)
-	placeholderviz.empty()
+	placeholderviz.empty()	
 
-# TEST
-#		# --------------------- Viz : casting 
-#
-#	gender_viz_cast = film_credit_cast_df[['gender','gender_text','id_tmdb']].groupby(by=['gender',"gender_text"]).count().reset_index()
-#	gender_viz_cast.rename(columns = {'id_tmdb':'nb_by_genre'}, inplace = True)
-#	st.session_state.cast = gender_viz_cast
-#	#st.dataframe(gender_viz_cast)
-#
-#	colinfofilm.write('Répartition par genre du casting')
-#	with colinfofilm.expander("table de données"):
-#		st.dataframe(gender_viz_cast)
-#
-#	colorscast = ['red' if x == 1 else 'blue' if x == 2 else 'green' if x == 0 else 'grey' for x in st.session_state.cast['gender']]
-#
-#	figcast = make_subplots(specs=[[{"type": "pie"}]],)
-#
-#	figcast.add_trace(go.Pie(labels=st.session_state.cast['gender_text'], values=st.session_state.cast['nb_by_genre'], name="Casting"),
-#	              row=1, col=1)
-#
-#	figcast.update_traces(hole=.4, hoverinfo="label+value+name",marker=dict(colors=colorscast), row=1) # Use `hole` to create a donut-like pie chart
-#
-#	figcast.update_layout(width = 400,
-#		margin=dict(t=0, b=0, l=50, r=0),
-#    	#title_text="Casting",
-#    	# Add annotations in the center of the donut pies.
-#    	annotations=[dict(text='Casting', x=0.5, y=0.5, font_size=20, showarrow=False)])
-#
-#	colinfofilm.plotly_chart(figcast)
-#
-		# --------------------- Viz : crew
+		# --------------------- ACTIVATION MENU SELECTION FILM
 
-#	gender_viz_crew = film_credit_crew_df[['gender','gender_text','id_tmdb']].groupby(by=['gender',"gender_text"]).count().reset_index()
-#	gender_viz_crew.rename(columns = {'id_tmdb':'nb_by_genre'}, inplace = True)
-#	st.session_state.crew = gender_viz_crew
-#	#st.dataframe(gender_viz_crew)
-#
-#	colinfofilm.write("Répartition par genre de l'équipe technique")
-#	with colinfofilm.expander("table de données"):
-#		st.dataframe(gender_viz_crew)
-#
-#	colorscrew = ['red' if x == 1 else 'blue' if x == 2 else 'green' if x == 0 else 'grey' for x in st.session_state.crew['gender']]
-#
-#	# Create subplots: use 'domain' type for Pie subplot
-#	figcrew = make_subplots(specs=[[{"type": "pie"}]],)
-#
-#	figcrew.add_trace(go.Pie(labels=st.session_state.crew['gender_text'], values=st.session_state.crew['nb_by_genre'], name="Equipe tech"),
-#	              row=1, col=1)
-#
-#	figcrew.update_traces(hole=.4, hoverinfo="label+value+name",marker=dict(colors=colorscrew), row=1)
-#
-#	figcrew.update_layout(width = 300,
-#		margin=dict(t=0, b=0, l=50, r=0),
-#    	#title_text="Casting",
-#    	# Add annotations in the center of the donut pies.
-#    	annotations=[dict(text='Crew', x=0.5, y=0.5, font_size=20, showarrow=False)])
-#
-#	colinfofilm.plotly_chart(figcrew)
-
-	# --------------------- ACTIVATION MENU SELECTION FILM
 menu_nav_viz_dict = {
-    "Informations" : {"fn": do_home_info},
-    "Datavisualisations" : {"fn": do_visualisation},
-    "Test Bechdel" : {"fn": do_bechdel},
-}
+"Informations" : {"fn": do_home_info},
+"Datavisualisations" : {"fn": do_visualisation},
+"Test Bechdel" : {"fn": do_bechdel},}
+
+
+#if selected_info in menu_nav_viz_dict.keys():
+#	menu_nav_viz_dict[str(selected_info)]["fn"]()
 
 if selected_info in menu_nav_viz_dict.keys():
-	menu_nav_viz_dict[selected_info]["fn"]()
+	if selected_info == "Informations":
+		do_home_info()
+	elif selected_info == "Datavisualisations":
+		do_visualisation()
+	elif selected_info == "Test Bechdel":
+		do_bechdel()
+	else :
+		st.empty()
 
 
 
-			#menu_dict_nav = {
-			#"Perso" : {"fn": show_perso},
-			##"Visualisations" : {"fn": do_visualisation},
-			##"Formulaire" : {"fn": NewFilm},
-			#}
-#
-#
-			#if nav_form in menu_dict_nav.keys():
-			#	if selected == "Perso":
-			#		show_perso()
 
-
-
-# Streamit book properties
-#tb.set_book_config(menu_title="bechdelAI",
-#                   menu_icon="lightbulb",
-#                   options=[
-#                   		#"Home",
-#                           "Datasets",
-#                           "Formulaire : grille de visionnage",
-#                           ],
-#                   paths=[
-#                   	  #"",
-#                         "data4good_streamlit/data4good_dataset.py", # single file
-#                         "data4good_streamlit/data4good_form.py",
-#                         ],
-#                   icons=[
-#                   	  #"chart",
-#                         "code",
-#                         "robot",
-#                         ],
-#                   )
-
-
-#st.help(pd.DataFrame)
-
-# TEST
-
-#option_names = ["a", "b", "c"]
-#
-#output_container = st.empty()
-#
-#next = st.button("Next/save")
-#
-#if next:
-#    if st.session_state["radio_option"] == 'a':
-#        st.session_state.radio_option = 'b'
-#    elif st.session_state["radio_option"] == 'b':
-#        st.session_state.radio_option = 'c'
-#    else:
-#        st.session_state.radio_option = 'a'
-#
-#option = st.sidebar.radio("Pick an option", option_names , key="radio_option")
-#st.session_state
-#
-#if option == 'a':
-#    output_container.write("You picked 'a' :smile:")
-#elif option == 'b':
-#    output_container.write("You picked 'b' :heart:")
-#else:
-#    output_container.write("You picked 'c' :rocket:")
-#
-#FIN DE TEST
-
-#stb.set_chapter_config(path='data4good_streamlit', 
-#	toc=False, button='top', button_previous='⬅️', 
-#	button_next='➡️', button_refresh='🔄', 
-#	on_load_header=None, on_load_footer=None, save_answers=False)
