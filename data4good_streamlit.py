@@ -98,8 +98,11 @@ df_toreplace_list=['VII ','VI ','IV ','III ','II ','I ','V ']
 for atr in df_toreplace_list:
 	df_films['annee_sortie']=df_films[['annee_sortie']].apply(lambda x : x.str.replace(atr, '', regex=False))
 
+df_films = df_films.sort_values(by=['titre'], ascending=True)
+
 # get a list of all possible ids, titles and years, for the widgets
 titre_list = list(df_films['titre'].unique())
+
 id_list = list(df_films['id_moviedb_final'].unique())
 annee_list = list(df_films['annee_sortie'].unique())
 
@@ -506,8 +509,6 @@ def do_home_info():
 
 	# --------------- COLONNES SELECTION FILM
 
-	#colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
-
 	with colselect :
 		#colselect.markdown("Sélectionnez un film", unsafe_allow_html=True)
 		titre = st.selectbox(label = 'Sélectionnez un film', options = titre_list)
@@ -559,8 +560,6 @@ def do_bechdel():
 
 	# --------------- COLONNES SELECTION FILM
 
-	#colselect,colvide1,colinfofilm = st.columns([2.5,0.5,5])
-
 	with colselect :
 		#colselect.markdown("Sélectionnez un film", unsafe_allow_html=True)
 		titre = st.selectbox(label = 'Sélectionnez un film', options = titre_list)
@@ -611,10 +610,18 @@ def do_bechdel():
 		film_bechdel_dict = response_bechdel.json()
 		film_bechdel=film_bechdel_dict.get('rating')
 
+		images = ['BechdelAI.png']
+
 		if film_bechdel not in [1,2,3]:
-			colinfofilm.caption("Ce film n'a pas encore été évalué. N'hésitez à le faire sur le site du Test Bechdel : https://bechdeltest.com/")
+			colinfofilm.caption("Ce film n'a pas encore été évalué. N'hésitez pas à le faire sur le site du Test Bechdel : https://bechdeltest.com/")
 		else : 
-			colinfofilm.metric(label="Rating :", value=film_bechdel)
+			#colinfofilm.metric(label="Rating :", value=film_bechdel)
+			if film_bechdel == 1 :
+				colinfofilm.image(images * int(film_bechdel),width=130, caption = 'Il y au moins deux personnages féminins identifiables')
+			if film_bechdel == 2 :
+				colinfofilm.image(images * int(film_bechdel),width=130, caption = ['Il y au moins deux personnages fémininsidentifiables','qui parlent l’une avec l’autre'])
+			if film_bechdel == 3 :
+				colinfofilm.image(images * int(film_bechdel),width=130, caption = ['Il y au moins deux personnages féminins identifiables','qui parlent l’une avec l’autre','d’autre chose que d’un personnage masculin.'])
 
 	placeholderbt.empty()
 
