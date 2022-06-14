@@ -12,16 +12,9 @@ streamlit-option-menu
 toml
 urllib3
 transformer
-tensorboard
-tensorboard-data-server
-tensorboard-plugin-wit
 tensorflow
-tensorflow-estimator
-tensorflow-io-gcs-filesystem
 python-dotenv
 Wikipedia-API
 spacy
-spacy-legacy
-spacy-loggers
 outputformat
 pyvis
