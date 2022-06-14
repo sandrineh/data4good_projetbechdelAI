@@ -21,7 +21,7 @@ try:
     # load .env file
     load_dotenv(f"{os.getcwd()}/.env", verbose=True)
     load_dotenv()
-    API_KEY = "4f0d9b752dd1d3a0b158afb56be09ac7" #st.secrets["api_secrets"]["tmdb_secret"] API_KEY = environ["TMDB_API_KEY"]
+    API_KEY = st.secrets["api_secrets"]["tmdb_secret"] #API_KEY = environ["TMDB_API_KEY"]
 except:
     raise APIKeyNotSetInEnv(
         "You need to set your TMDB API key into a .env file in your current working directory.\n`TMDB_API_KEY=<API_KEY>`\n"
