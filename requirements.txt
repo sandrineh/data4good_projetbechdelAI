@@ -11,7 +11,7 @@ streamlit-book
 streamlit-option-menu
 toml
 urllib3
-transformer
+transformer==4.19.4
 tensorflow
 python-dotenv
 Wikipedia-API
