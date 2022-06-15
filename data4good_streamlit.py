@@ -63,8 +63,8 @@ with st.expander('vizViz'):
 	# --------------- HEADER
 with st.sidebar:
 	def header(projet,sous_projet):
-		st.markdown(f'<div><h1 style="background-color:#baeca6;color:#000;height:150px;justify-content:center;align-items:center;margin-bottom:20px;text-align:center;border-radius:6px;font-size:42px;">{projet}</br><p style="font-size:20px;padding-top:10px; color:#363535">{sous_projet}</p></div>',unsafe_allow_html=True) #background :linear-gradient(45deg, blue, red)
-		st.image('BechdelAI.png')
+		#st.markdown(f'<div><h1 style="background-color:#baeca6;color:#000;height:150px;justify-content:center;align-items:center;margin-bottom:20px;text-align:center;border-radius:6px;font-size:42px;">{projet}</br><p style="font-size:20px;padding-top:10px; color:#363535">{sous_projet}</p></div>',unsafe_allow_html=True) #background :linear-gradient(45deg, blue, red)
+		st.image('logo2.png')
 	header("Bechdel AI","Un projet Data 4 Good")
 	
 
