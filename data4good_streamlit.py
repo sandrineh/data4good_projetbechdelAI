@@ -78,8 +78,7 @@ with st.sidebar.expander("Le projet"):
 
 with st.sidebar.expander("L'application"):
      st.write("""Cette application interactive a été construite par l’équipe du projet Bechdel AI à l’aide de Streamlit.\n 
-     	Accès à notre repository Github :
-     	https://github.com/dataforgoodfr/bechdelai/""")
+Accès à notre repository Github :\n https://github.com/dataforgoodfr/bechdelai/""")
 
 # --------------- SIDEBAR - MENU
 
