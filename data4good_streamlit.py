@@ -77,11 +77,9 @@ with st.sidebar.expander("Le projet"):
 	st.markdown(f'<a href={url} style="text-decoration:none;color:#000">En savoir plus</a>', unsafe_allow_html=True)
 
 with st.sidebar.expander("L'application"):
-     st.write("""This interactive eCourse App was built by Sharone Li using Streamlit and Streamlit_book. 
-     	Streamlit_book is a Streamlit companion library that was written in Python and created by Sebastian Flores Benner. 
-     	\n  \nThe Streamlit_book library was released on 01/20/2022. 
-     	If you want to learn more about Streamlit_book, please read Sebastian's post here:
-     	https://blog.streamlit.io/how-to-create-interactive-books-with-streamlit-and-streamlit-book-in-5-steps/""")
+     st.write("""Cette application interactive a été construite par l’équipe du projet Bechdel AI à l’aide de Streamlit. 
+     	Accès à notre repository Github :
+     	https://github.com/dataforgoodfr/bechdelai/""")
 
 # --------------- SIDEBAR - MENU
 
