@@ -136,12 +136,12 @@ class aaaa():
 	def do_home():
 		st.header("INFOS FILM ET DATAVISUALISATIONS")
 		st.write(""" A quoi vous fait penser Mulan ? Une femme forte, une héroine, une inspiration pour des milliers de petites filles ? Oui c’est surement tout cela. Et pourtant, à bien y regarder, les hommes sont plus mis en avant et leur temps de parole  (75% !) supplante celui de Mulan.
-Comment a t-on pu le déterminer ? Grâce aux données disponibles sur internet, aux algorithmes et à l’IA.\n
+Comment a t-on pu le déterminer ? Grâce aux données disponibles sur internet, aux algorithmes et à l’IA.
 C’est pourquoi nous avons créé cette application. Afin de vous sensibiliser sur les apparences que peuvent revêtir un film et les réalités concrètes établies par l’analyse des données.\n
 Sélectionnez un film et découvrez :
 - la composition du casting mais également de l’équipe technique
 - s'il passe le test de Bechdel
-- quelle est la relation entre les personnages et la différence d'âge entre les acteur.rice.s qui les incarnent.
+- quelle est la relation entre les personnages et la différence d'âge entre les acteur.rice.s qui les incarnent.\n
  """)
 
 # --------------------- FORMULAIRE
