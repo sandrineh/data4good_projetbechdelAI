@@ -135,15 +135,14 @@ class aaaa():
 	# --------------- FILM : PRESENTATION DE LA PARTIE INFOS FILMS ET DATAVIZ
 	def do_home():
 		st.header("INFOS FILM ET DATAVISUALISATIONS")
-		st.write(""" «**Ce qui ne se mesure pas n’existe pas !**»  , «**Ce qui est compté est ce qui compte**». Ces citations, respectivement, 
-			du physisien Niels Bohr et de la géographe féministe Joni Seager nous rappellent l’importance de la collecte de la donnée, de son analyse dans un processus d’amélioration continue tout en nous invitant à nous interroger sur la donnée.
-\nL’application sur laquelle vous êtes, vous permet :
-- d’aborder un film au travers des données disponibles sur le web**(sources des données)
-- de contribuer à enrichir les données des films français
-L’objectif est donc double :
-- vous sensibiliser sur les imaginaires
-- ihoznsfc\n
-Il ne vous reste plus qu’à sélectionner un film et """)
+		st.write(""" A quoi vous fait penser Mulan ? Une femme forte, une héroine, une inspiration pour des milliers de petites filles ? Oui c’est surement tout cela. Et pourtant, à bien y regarder, les hommes sont plus mis en avant et leur temps de parole  (75% !) supplante celui de Mulan.
+Comment a t-on pu le déterminer ? Grâce aux données disponibles sur internet, aux algorithmes et à l’IA.\n
+C’est pourquoi nous avons créé cette application. Afin de vous sensibiliser sur les apparences que peuvent revêtir un film et les réalités concrètes établies par l’analyse des données.\n
+Sélectionnez un film et découvrez :
+- la composition du casting mais également de l’équipe technique
+- s'il passe le test de Bechdel
+- quelle est la relation entre les personnages et la différence d'âge entre les acteur.rice.s qui les incarnent.
+ """)
 
 # --------------------- FORMULAIRE
 
