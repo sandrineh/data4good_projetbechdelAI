@@ -5,6 +5,7 @@ from os import environ
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
+import streamlit as st
 
 from bechdelai.bechdelai.data.scrap import get_json_from_url
 
