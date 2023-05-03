@@ -5,29 +5,31 @@ from os import environ
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
+import streamlit as st
 
 from bechdelai.bechdelai.data.scrap import get_json_from_url
 
 
-class APIKeyNotSetInEnv(Exception):
-    """Exception class for API key not set"""
+#class APIKeyNotSetInEnv(Exception):
+#    """Exception class for API key not set"""
+#
+#    pass
+#
+#
+#import os
+#
+#try:
+#    # load .env file
+#    load_dotenv(f"{os.getcwd()}/.env", verbose=True)
+#    load_dotenv()
+#    API_KEY = st.secrets["api_secrets"]["tmdb_secret"] #API_KEY = environ["TMDB_API_KEY"]
+#except:
+#    raise APIKeyNotSetInEnv(
+#        "You need to set your TMDB API key into a .env file in your current working directory.\n`TMDB_API_KEY=<API_KEY>`\n"
+#        + "To get a key please check directly on the website https://developers.themoviedb.org/3/getting-started/introduction"
+#    )
 
-    pass
-
-
-import os
-
-try:
-    # load .env file
-    load_dotenv(f"{os.getcwd()}/.env", verbose=True)
-    load_dotenv()
-    API_KEY = st.secrets["api_secrets"]["tmdb_secret"] #API_KEY = environ["TMDB_API_KEY"]
-except:
-    raise APIKeyNotSetInEnv(
-        "You need to set your TMDB API key into a .env file in your current working directory.\n`TMDB_API_KEY=<API_KEY>`\n"
-        + "To get a key please check directly on the website https://developers.themoviedb.org/3/getting-started/introduction"
-    )
-
+API_KEY = st.secrets["api_secrets"]["tmdb_secret"] #API_KEY = environ["TMDB_API_KEY"]
 # main urls
 MAIN_URL = "https://www.themoviedb.org"
 IMG_URL = "https://image.tmdb.org/t/p/w94_and_h141_bestv2"

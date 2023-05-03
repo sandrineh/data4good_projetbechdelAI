@@ -63,8 +63,8 @@ with st.expander('vizViz'):
 	# --------------- HEADER
 with st.sidebar:
 	def header(projet,sous_projet):
-		st.markdown(f'<div><h1 style="background-color:#baeca6;color:#000;height:150px;justify-content:center;align-items:center;margin-bottom:20px;text-align:center;border-radius:6px;font-size:42px;">{projet}</br><p style="font-size:20px;padding-top:10px; color:#363535">{sous_projet}</p></div>',unsafe_allow_html=True) #background :linear-gradient(45deg, blue, red)
-		st.image('BechdelAI.png')
+		#st.markdown(f'<div><h1 style="background-color:#baeca6;color:#000;height:150px;justify-content:center;align-items:center;margin-bottom:20px;text-align:center;border-radius:6px;font-size:42px;">{projet}</br><p style="font-size:20px;padding-top:10px; color:#363535">{sous_projet}</p></div>',unsafe_allow_html=True) #background :linear-gradient(45deg, blue, red)
+		st.image('logo2.png')
 	header("Bechdel AI","Un projet Data 4 Good")
 	
 
@@ -77,11 +77,8 @@ with st.sidebar.expander("Le projet"):
 	st.markdown(f'<a href={url} style="text-decoration:none;color:#000">En savoir plus</a>', unsafe_allow_html=True)
 
 with st.sidebar.expander("L'application"):
-     st.write("""This interactive eCourse App was built by Sharone Li using Streamlit and Streamlit_book. 
-     	Streamlit_book is a Streamlit companion library that was written in Python and created by Sebastian Flores Benner. 
-     	\n  \nThe Streamlit_book library was released on 01/20/2022. 
-     	If you want to learn more about Streamlit_book, please read Sebastian's post here:
-     	https://blog.streamlit.io/how-to-create-interactive-books-with-streamlit-and-streamlit-book-in-5-steps/""")
+     st.write("""Cette application interactive a été construite par l’équipe du projet Bechdel AI à l’aide de Streamlit.\n 
+Accès à notre repository Github :\n https://github.com/dataforgoodfr/bechdelai/""")
 
 # --------------- SIDEBAR - MENU
 
@@ -135,15 +132,14 @@ class aaaa():
 	# --------------- FILM : PRESENTATION DE LA PARTIE INFOS FILMS ET DATAVIZ
 	def do_home():
 		st.header("INFOS FILM ET DATAVISUALISATIONS")
-		st.write(""" «**Ce qui ne se mesure pas n’existe pas !**»  , «**Ce qui est compté est ce qui compte**». Ces citations, respectivement, 
-			du physisien Niels Bohr et de la géographe féministe Joni Seager nous rappellent l’importance de la collecte de la donnée, de son analyse dans un processus d’amélioration continue tout en nous invitant à nous interroger sur la donnée.
-\nL’application sur laquelle vous êtes, vous permet :
-- d’aborder un film au travers des données disponibles sur le web**(sources des données)
-- de contribuer à enrichir les données des films français
-L’objectif est donc double :
-- vous sensibiliser sur les imaginaires
-- ihoznsfc\n
-Il ne vous reste plus qu’à sélectionner un film et """)
+		st.write(""" A quoi vous fait penser Mulan ? Une femme forte, une héroine, une inspiration pour des milliers de petites filles ? Oui c’est sûrement tout cela. Et pourtant, à bien y regarder, les hommes sont plus mis en avant et leur temps de parole  (75% !) supplante celui de Mulan.
+Comment a t-on pu le déterminer ? Grâce aux données disponibles sur internet, aux algorithmes et à l’IA.
+C’est pourquoi nous avons créé cette application. Afin de vous sensibiliser sur les apparences que peuvent revêtir un film et les réalités concrètes établies par l’analyse des données.\n
+Sélectionnez un film et découvrez :
+- la composition du casting mais également de l’équipe technique
+- s'il passe le test de Bechdel
+- quelle est la relation entre les personnages et la différence d'âge entre les acteur.rice.s qui les incarnent.\n
+ """)
 
 # --------------------- FORMULAIRE
 
